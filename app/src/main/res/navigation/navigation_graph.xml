@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/announcementsFragment">
+
+    <fragment
+        android:id="@+id/announcementsFragment"
+        android:name="gr.teithe.it.it_app.ui.announcements.AnnouncementsFragment"
+        android:label="Ανακοινώσεις"
+        app:launchSingleTop="true"
+        tools:layout="@layout/fragment_announcements">
+        <action
+            android:id="@+id/announcementsToAuthentication"
+            app:destination="@id/authenticationFragment" />
+        <action
+            android:id="@+id/anounencementsToDetails"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/announcementsToSearch"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/announcementsToNotifications"
+            app:destination="@id/notificationsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="gr.teithe.it.it_app.ui.details.DetailsFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="title"
+            android:defaultValue="Ανακοίνωση"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="https://apps.it.teithe.gr/announcements/announcement/{id}"
+            android:autoVerify="true"
+            tools:targetApi="m" />
+    </fragment>
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="gr.teithe.it.it_app.ui.authentication.AuthenticationFragment"
+        android:label="Ταυτοποίηση"
+        tools:layout="@layout/fragment_authentication" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="gr.teithe.it.it_app.ui.notifications.NotificationsFragment"
+        android:label="Ειδοποιήσεις"
+        app:launchSingleTop="true"
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/notificationsToDetails"
+            app:destination="@id/detailsFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="gr.teithe.it.it_app.ui.profile.ProfileFragment"
+        android:label="Προφίλ"
+        app:launchSingleTop="true"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="gr.teithe.it.it_app.ui.settings.SettingsFragment"
+        android:label="Ρυθμίσεις" >
+        <action
+            android:id="@+id/settingsToEmail"
+            app:destination="@id/emailFragment" />
+        <action
+            android:id="@+id/settingsToPassword"
+            app:destination="@id/passwordFragment" />
+        <action
+            android:id="@+id/settingsToCategories"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailFragment"
+        android:name="gr.teithe.it.it_app.ui.email.EmailFragment"
+        android:label="Αλλαγή email"
+        tools:layout="@layout/fragment_email" />
+    <fragment
+        android:id="@+id/passwordFragment"
+        android:name="gr.teithe.it.it_app.ui.password.PasswordFragment"
+        android:label="Αλλαγή κωδικού πρόσβασης"
+        tools:layout="@layout/fragment_password" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="gr.teithe.it.it_app.ui.search.SearchFragment"
+        android:label="Αναζήτηση"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/searchToDetails"
+            app:destination="@id/detailsFragment" >
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="gr.teithe.it.it_app.ui.categories.CategoriesFragment"
+        android:label="Παρακολούθηση πινάκων"
+        tools:layout="@layout/fragment_categories" />
+</navigation>

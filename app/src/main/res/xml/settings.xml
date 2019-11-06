@@ -1,0 +1,60 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Λογιαριασμός">
+
+        <Preference
+            android:icon="@drawable/ic_email_black_24dp"
+            android:key="pref_change_email"
+            android:title="Αλλαγή email" />
+
+        <Preference
+            android:icon="@drawable/ic_vpn_key_black_24dp"
+            android:key="pref_change_password"
+            android:title="Αλλαγή κωδικού πρόσβασης" />
+
+        <Preference
+            android:icon="@drawable/ic_visibility_black_24dp"
+            android:key="pref_categories"
+            android:title="Παρακολούθηση πινάκων"
+            android:summary="Οι πίνακες που θα λαμβάνετε ειδοποίηση"/>
+
+        <Preference
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:key="pref_logout"
+            android:title="Αποσύνδεση" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Εφαρμογή">
+        <ListPreference
+            android:defaultValue="default"
+            android:entries="@array/themeList"
+            android:entryValues="@array/themeEntry"
+            android:icon="@drawable/ic_theme_black_24dp"
+            android:key="pref_theme"
+            android:summary="%s"
+            android:title="Θέμα" />
+
+        <SwitchPreference
+            android:defaultValue="disabled"
+            android:icon="@drawable/ic_notifications_none_black_24dp"
+            android:key="pref_notifications"
+            android:title="Ειδοποιήσεις" />
+
+        <Preference
+            android:icon="@drawable/ic_bug_report_black_24dp"
+            android:key="pref_bug"
+            android:title="Αναφορά προβλήματος" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Πληροφορίες">
+
+        <Preference
+            android:icon="@drawable/ic_document_black_24dp"
+            android:key="pref_privacy"
+            android:title="Πολιτική Απορρήτου" />
+
+        <Preference
+            android:icon="@drawable/ic_info_outline_black_24dp"
+            android:key="pref_about"
+            android:summary="1.0"
+            android:title="Έκδοση" />
+    </PreferenceCategory>
+</PreferenceScreen>

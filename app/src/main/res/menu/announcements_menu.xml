@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/m_announcements_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Αναζήτηση"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/m_announcements_notifications"
+        android:icon="@drawable/custom_notification"
+        android:title="Ειδοποιήσεις"
+        app:showAsAction="always"/>
+</menu>

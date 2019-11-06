@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/announcementsFragment"
+        android:icon="@drawable/ic_announcement_black_24dp"
+        android:title="Ανακοινώσεις" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="Προφίλ" />
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="Ρυθμίσεις" />
+</menu>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">IEE Apps</string>
+
+    <string name="default_notification_channel_id">default</string>
+
+    <string name="notification">Ο/η %1$s ανέβασε ανακοίνωση στην κατηγορία %2$s</string>
+</resources>

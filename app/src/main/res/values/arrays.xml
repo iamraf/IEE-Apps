@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="themeList">
+        <item>Λευκό</item>
+        <item>Σκούρο</item>
+        <item>Αυτόματο</item>
+    </string-array>
+
+    <string-array name="themeEntry">
+        <item>light</item>
+        <item>dark</item>
+        <item>default</item>
+    </string-array>
+</resources>
