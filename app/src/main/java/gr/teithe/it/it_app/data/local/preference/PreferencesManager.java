@@ -22,8 +22,6 @@ import android.content.SharedPreferences;
 
 import androidx.preference.PreferenceManager;
 
-import gr.teithe.it.it_app.BuildConfig;
-
 public class PreferencesManager
 {
     private static SharedPreferences instance;
@@ -74,18 +72,6 @@ public class PreferencesManager
     {
         SharedPreferences.Editor prefsEditor = instance.edit();
         prefsEditor.putBoolean("pref_notifications", flag);
-        prefsEditor.apply();
-    }
-
-    public static boolean isFirstTime()
-    {
-        return instance.getBoolean("first_time_code_" + BuildConfig.VERSION_CODE, true);
-    }
-
-    public static void setFirstTime(boolean flag)
-    {
-        SharedPreferences.Editor prefsEditor = instance.edit();
-        prefsEditor.putBoolean("first_time_code_" + BuildConfig.VERSION_CODE, flag);
         prefsEditor.apply();
     }
 }

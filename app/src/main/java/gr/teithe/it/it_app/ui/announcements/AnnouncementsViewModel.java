@@ -27,6 +27,7 @@ import androidx.paging.PagedList;
 import gr.teithe.it.it_app.data.model.Announcement;
 import gr.teithe.it.it_app.data.model.Notification;
 import gr.teithe.it.it_app.data.repository.NotificationsRepository;
+
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -101,6 +102,9 @@ public class AnnouncementsViewModel extends ViewModel
 
                     notificationCount.postValue(String.valueOf(count));
 
+                }, throwable ->
+                {
+                    //Do nothing
                 }));
     }
 

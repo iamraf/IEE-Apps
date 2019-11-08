@@ -86,6 +86,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                 args.putString("id", dataId);
                 args.putString("title", dataAbout);
 
+                ThemeHelper.applyTheme(PreferencesManager.getTheme());
+
                 PendingIntent pendingIntent = new NavDeepLinkBuilder(getApplicationContext())
                         .setGraph(R.navigation.navigation_graph)
                         .setDestination(R.id.detailsFragment)

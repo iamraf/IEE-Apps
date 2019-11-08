@@ -17,7 +17,6 @@
 
 package gr.teithe.it.it_app.ui.main;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
@@ -57,27 +56,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(mDataBinding.aMainToolbar);
 
         setupNavigation();
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-
-        if(PreferencesManager.isFirstTime())
-        {
-            new AlertDialog.Builder(this)
-                    .setTitle("Έκδοση 1.0")
-                    .setCancelable(false)
-                    .setMessage("Τι είναι νέο;\n" +
-                            "\n" +
-                            "- Σταθερή έκδοση\n" +
-                            "- Νέα εμφάνιση\n" +
-                            "- Σκούρο θέμα\n" +
-                            "- Διόρθωση προβλημάτων\n\nΕνεργοποιήστε τις ειδοποιήσεις για να λαμβάνετε πρώτοι τις νέες ανακοινώσεις.\n(Ρυθμίσεις > Ειδοποιήσεις)")
-                    .setPositiveButton("ΚΛΕΙΣΙΜΟ", (dialog, which) -> PreferencesManager.setFirstTime(false))
-                    .show();
-        }
     }
 
     private void applyTheme()

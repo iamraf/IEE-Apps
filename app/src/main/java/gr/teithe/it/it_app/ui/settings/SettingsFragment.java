@@ -213,6 +213,12 @@ public class SettingsFragment extends PreferenceFragmentCompat
                 return true;
             });
         }
+
+        Preference about = findPreference("pref_about");
+        if(about != null)
+        {
+            about.setSummary(BuildConfig.VERSION_NAME);
+        }
     }
 
     @Override
