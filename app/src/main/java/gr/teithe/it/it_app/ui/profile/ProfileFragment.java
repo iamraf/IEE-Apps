@@ -166,24 +166,27 @@ public class ProfileFragment extends Fragment
                 builder.add("labeledURI", mDataBinding.fProfileWebsite.getText().toString());
             }
 
-            if(mUser.getSocialMedia().getFacebook() != null && !mDataBinding.fProfileFacebook.getText().toString().equals(mUser.getSocialMedia().getFacebook()))
+            if(mUser.getSocialMedia() != null)
             {
-                builder.add("facebook", mDataBinding.fProfileFacebook.getText().toString());
-            }
+                if(mUser.getSocialMedia().getFacebook() != null && !mDataBinding.fProfileFacebook.getText().toString().equals(mUser.getSocialMedia().getFacebook()))
+                {
+                    builder.add("facebook", mDataBinding.fProfileFacebook.getText().toString());
+                }
 
-            if(mUser.getSocialMedia().getTwitter() != null && !mDataBinding.fProfileTwitter.getText().toString().equals(mUser.getSocialMedia().getTwitter()))
-            {
-                builder.add("twitter", mDataBinding.fProfileTwitter.getText().toString());
-            }
+                if(mUser.getSocialMedia().getTwitter() != null && !mDataBinding.fProfileTwitter.getText().toString().equals(mUser.getSocialMedia().getTwitter()))
+                {
+                    builder.add("twitter", mDataBinding.fProfileTwitter.getText().toString());
+                }
 
-            if(mUser.getSocialMedia().getGithub() != null && !mDataBinding.fProfileGithub.getText().toString().equals(mUser.getSocialMedia().getGithub()))
-            {
-                builder.add("github", mDataBinding.fProfileGithub.getText().toString());
-            }
+                if(mUser.getSocialMedia().getGithub() != null && !mDataBinding.fProfileGithub.getText().toString().equals(mUser.getSocialMedia().getGithub()))
+                {
+                    builder.add("github", mDataBinding.fProfileGithub.getText().toString());
+                }
 
-            if(mUser.getSocialMedia().getLinkedIn() != null && !mDataBinding.fProfileLinkedin.getText().toString().equals(mUser.getSocialMedia().getLinkedIn()))
-            {
-                builder.add("linkedIn", mDataBinding.fProfileLinkedin.getText().toString());
+                if(mUser.getSocialMedia().getLinkedIn() != null && !mDataBinding.fProfileLinkedin.getText().toString().equals(mUser.getSocialMedia().getLinkedIn()))
+                {
+                    builder.add("linkedIn", mDataBinding.fProfileLinkedin.getText().toString());
+                }
             }
 
             FormBody body = builder.build();

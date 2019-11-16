@@ -72,10 +72,10 @@ public class User
     private String title;
     @NonNull
     private String profilePhoto;
-    @NonNull
+    @Nullable
     private SocialMedia socialMedia;
 
-    public User(@NonNull String am, @NonNull String fullName, @NonNull String description, @NonNull String displayName, @NonNull String category, @NonNull String website, @NonNull String mail, @NonNull String lastPasswordChange, @NonNull String secondaryMail, @NonNull String currentSemester, @NonNull String telephoneNumber, @NonNull String title, @NonNull String profilePhoto, @NonNull SocialMedia socialMedia)
+    public User(@NonNull String am, @NonNull String fullName, @NonNull String description, @NonNull String displayName, @NonNull String category, @NonNull String website, @NonNull String mail, @NonNull String lastPasswordChange, @NonNull String secondaryMail, @NonNull String currentSemester, @NonNull String telephoneNumber, @NonNull String title, @NonNull String profilePhoto, @Nullable SocialMedia socialMedia)
     {
         this.am = am;
         this.fullName = fullName;
@@ -171,7 +171,7 @@ public class User
         return profilePhoto;
     }
 
-    @NonNull
+    @Nullable
     public SocialMedia getSocialMedia()
     {
         return socialMedia;
