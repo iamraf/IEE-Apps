@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,14 @@
 
 package gr.teithe.it.it_app.ui.details;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,6 +32,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,19 +43,21 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import gr.teithe.it.it_app.R;
+import gr.teithe.it.it_app.data.local.preference.PreferencesManager;
+import gr.teithe.it.it_app.data.model.File;
 import gr.teithe.it.it_app.databinding.FragmentDetailsBinding;
 
 import gr.teithe.it.it_app.util.Constants;
 
-public class DetailsFragment extends Fragment
+public class DetailsFragment extends Fragment implements FilesAdapter.FilesAdapterListener
 {
     private FragmentDetailsBinding mDataBinding;
     private DetailsViewModel mViewModel;
 
-    private AlertDialog mProgressDialog;
-
     private String mAnnouncementId;
     private String mAnnouncementCategory;
+
+    private FilesAdapter mAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -68,16 +66,16 @@ public class DetailsFragment extends Fragment
 
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setCancelable(false);
-        builder.setMessage("Παρακαλώ περιμένετε...");
-
-        mProgressDialog = builder.create();
-
         if(getArguments() != null)
         {
             mAnnouncementId = DetailsFragmentArgs.fromBundle(getArguments()).getId();
             mAnnouncementCategory = DetailsFragmentArgs.fromBundle(getArguments()).getTitle();
+
+            mAdapter = new FilesAdapter(this);
+
+            mDataBinding.fDetailsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            mDataBinding.fDetailsRecycler.setHasFixedSize(true);
+            mDataBinding.fDetailsRecycler.setAdapter(mAdapter);
         }
         else
         {
@@ -127,65 +125,7 @@ public class DetailsFragment extends Fragment
             }
         });
 
-        mDataBinding.fDetailsFiles.setOnClickListener(v ->
-        {
-            if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 69 /*nice*/);
-            }
-            else
-            {
-                mViewModel.downloadFiles(mAnnouncementId, getContext());
-            }
-        });
-
-        mViewModel.isDownloading().observe(getViewLifecycleOwner(), aBoolean ->
-        {
-            if(aBoolean)
-            {
-                mProgressDialog.show();
-            }
-            else
-            {
-                mProgressDialog.dismiss();
-            }
-        });
-
-        mViewModel.isSuccess().observe(getViewLifecycleOwner(), aBoolean ->
-        {
-            if(aBoolean)
-            {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                {
-                    Intent intent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
-                    startActivity(intent);
-                }
-                else
-                {
-                    Context context = getContext();
-
-                    if(context != null)
-                    {
-                        Toast.makeText(context, "Η λήψη έγινε επιτυχώς", Toast.LENGTH_SHORT).show();
-
-                        new AlertDialog.Builder(context)
-                                .setTitle("Αρχεία")
-                                .setMessage("Τα αρχεία κατεβαίνουν συμπιεσμένα σε μορφή zip. Για να μπορείτε να τα ανοίξετε πρέπει πρώτα να τα αποσυμπιέσετε κατεβάζοντας κάποιον αποσυμπιεστή.")
-                                .setNegativeButton("ΚΛΕΙΣΙΜΟ", null)
-                                .show();
-                    }
-                }
-            }
-            else
-            {
-                Context context = getContext();
-
-                if(context != null)
-                {
-                    Toast.makeText(context, "Η λήψη αρχείου απέτυχε", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        mViewModel.getFile().observe(getViewLifecycleOwner(), file -> mAdapter.addFile(file));
     }
 
     @Override
@@ -223,11 +163,8 @@ public class DetailsFragment extends Fragment
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    public void onClicked(File file)
     {
-        if(requestCode == 69 /*nice*/ && permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE) && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-        {
-            mViewModel.downloadFiles(mAnnouncementId, getContext());
-        }
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.API_URL + "files/" + file.getId() + "/view?access_token=" + PreferencesManager.getAccessToken())));
     }
 }

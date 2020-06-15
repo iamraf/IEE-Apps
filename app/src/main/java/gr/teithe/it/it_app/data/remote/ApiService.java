@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package gr.teithe.it.it_app.data.remote;
 
 import gr.teithe.it.it_app.data.model.Announcement;
 import gr.teithe.it.it_app.data.model.Category;
+import gr.teithe.it.it_app.data.model.File;
 import gr.teithe.it.it_app.data.model.NotificationsResponse;
 import gr.teithe.it.it_app.data.model.TokenResponse;
 import gr.teithe.it.it_app.data.model.User;
@@ -104,8 +105,8 @@ public interface ApiService
     @PATCH("profile")
     Observable<Response<ResponseBody>> postProfile(@Body FormBody params);
 
-    @GET("files/{id}/downloadAll")
-    Observable<Response<ResponseBody>> downloadFiles(@Path("id") String id);
+    @GET("files/{id}")
+    Observable<File> getFile(@Path("id") String id);
 
     @PUT("categories/register")
     Observable<Response<ResponseBody>> putCategories(@Body RequestBody body);

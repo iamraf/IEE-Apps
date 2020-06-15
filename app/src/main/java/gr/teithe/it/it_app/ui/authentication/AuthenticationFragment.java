@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,8 +98,6 @@ public class AuthenticationFragment extends Fragment
                         {
                             Toast.makeText(getContext(), "Δεν δώθηκαν δικαιώματα στην εφαρμογή", Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(mDataBinding.getRoot()).popBackStack();
-
-                            return false;
                         }
                         else
                         {
@@ -107,9 +105,9 @@ public class AuthenticationFragment extends Fragment
                             final String code = uri.getQueryParameter("code");
 
                             mViewModel.authenticate(code);
-
-                            return false;
                         }
+
+                        return false;
                     }
                     else
                     {

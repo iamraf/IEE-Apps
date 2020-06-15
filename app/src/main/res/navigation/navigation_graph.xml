@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="gr.teithe.it.it_app.ui.settings.SettingsFragment"
-        android:label="Ρυθμίσεις" >
+        android:label="Ρυθμίσεις">
         <action
             android:id="@+id/settingsToEmail"
             app:destination="@id/emailFragment" />
@@ -95,8 +95,7 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/searchToDetails"
-            app:destination="@id/detailsFragment" >
-        </action>
+            app:destination="@id/detailsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/categoriesFragment"

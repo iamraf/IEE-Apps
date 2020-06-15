@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,15 +18,14 @@
 package gr.teithe.it.it_app.data.repository;
 
 import gr.teithe.it.it_app.data.model.Announcement;
+import gr.teithe.it.it_app.data.model.File;
 import gr.teithe.it.it_app.data.remote.ApiClient;
 import gr.teithe.it.it_app.data.remote.ApiService;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 
 public class AnnouncementsRepository
 {
@@ -52,8 +51,8 @@ public class AnnouncementsRepository
         return apiService.getAnnouncement(id);
     }
 
-    public Observable<Response<ResponseBody>> downloadFiles(String id)
+    public Observable<File> getFile(String id)
     {
-        return apiService.downloadFiles(id);
+        return apiService.getFile(id);
     }
 }

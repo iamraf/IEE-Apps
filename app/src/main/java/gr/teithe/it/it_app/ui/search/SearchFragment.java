@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,10 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchAdap
     private SearchViewModel mViewModel;
 
     private SearchAdapter mAdapter;
+
+    private SearchView mSearchView;
+
+    private String mQuery;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -114,6 +118,17 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchAdap
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        if(mQuery != null && mSearchView != null)
+        {
+            mSearchView.setQuery(mQuery, true);
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
@@ -121,7 +136,8 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchAdap
         inflater.inflate(R.menu.search_menu, menu);
 
         MenuItem item = menu.findItem(R.id.m_search);
-        SearchView mSearchView = (SearchView) item.getActionView();
+        mSearchView = (SearchView) item.getActionView();
+        mSearchView.setQueryHint("Τίτλο, Μάθημα, Καθηγητή...");
         mSearchView.setMaxWidth(Integer.MAX_VALUE);
         mSearchView.setIconified(false);
         mSearchView.setOnCloseListener(() -> true);
@@ -132,6 +148,8 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchAdap
             {
                 if(!query.isEmpty())
                 {
+                    mQuery = query;
+
                     mViewModel.searchAnnouncement(query);
 
                     Activity activity = getActivity();

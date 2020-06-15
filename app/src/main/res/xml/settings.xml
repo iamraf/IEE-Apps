@@ -1,6 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Λογιαριασμός">
-
         <Preference
             android:icon="@drawable/ic_email_black_24dp"
             android:key="pref_change_email"
@@ -22,6 +21,7 @@
             android:key="pref_logout"
             android:title="Αποσύνδεση" />
     </PreferenceCategory>
+
     <PreferenceCategory android:title="Εφαρμογή">
         <ListPreference
             android:defaultValue="default"
@@ -45,7 +45,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Πληροφορίες">
-
         <Preference
             android:icon="@drawable/ic_document_black_24dp"
             android:key="pref_privacy"
@@ -54,7 +53,6 @@
         <Preference
             android:icon="@drawable/ic_info_outline_black_24dp"
             android:key="pref_about"
-            android:summary="1.0"
             android:title="Έκδοση" />
     </PreferenceCategory>
 </PreferenceScreen>

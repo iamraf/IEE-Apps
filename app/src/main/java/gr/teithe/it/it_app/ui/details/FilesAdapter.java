@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gr.teithe.it.it_app.ui.search;
+package gr.teithe.it.it_app.ui.details;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -23,45 +23,43 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import gr.teithe.it.it_app.databinding.AnnouncementItemBinding;
-
-import gr.teithe.it.it_app.data.model.Announcement;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder>
+import gr.teithe.it.it_app.data.model.File;
+import gr.teithe.it.it_app.databinding.FileItemBinding;
+
+public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FileViewHolder>
 {
-    private List<Announcement> data;
+    private List<File> data;
 
-    private SearchAdapterListener listener;
+    private FilesAdapter.FilesAdapterListener listener;
 
-    public SearchAdapter(SearchAdapterListener listener)
+    public FilesAdapter(FilesAdapter.FilesAdapterListener listener)
     {
         this.listener = listener;
 
         data = new ArrayList<>();
     }
 
-    public void setData(List<Announcement> announcements)
+    public void addFile(File file)
     {
-        data.clear();
-        data.addAll(announcements);
+        data.add(file);
 
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public FileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        AnnouncementItemBinding binding = AnnouncementItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        FileItemBinding binding = FileItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        return new SearchViewHolder(binding);
+        return new FileViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull FileViewHolder holder, int position)
     {
         holder.bind(data.get(position));
     }
@@ -72,27 +70,27 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         return data.size();
     }
 
-    public class SearchViewHolder extends RecyclerView.ViewHolder
+    public class FileViewHolder extends RecyclerView.ViewHolder
     {
-        private final AnnouncementItemBinding binding;
+        private final FileItemBinding binding;
 
-        public SearchViewHolder(@NonNull AnnouncementItemBinding binding)
+        public FileViewHolder(@NonNull FileItemBinding binding)
         {
             super(binding.getRoot());
 
             this.binding = binding;
         }
 
-        public void bind(Announcement item)
+        public void bind(File item)
         {
-            binding.getRoot().setOnClickListener(v -> listener.onClicked(binding.getAnnouncement()));
-            binding.setAnnouncement(item);
+            binding.getRoot().setOnClickListener(v -> listener.onClicked(binding.getFile()));
+            binding.setFile(item);
             binding.executePendingBindings();
         }
     }
 
-    public interface SearchAdapterListener
+    public interface FilesAdapterListener
     {
-        void onClicked(Announcement announcement);
+        void onClicked(File file);
     }
 }

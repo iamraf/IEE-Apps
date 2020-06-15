@@ -15,32 +15,46 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gr.teithe.it.it_app.data.remote;
+package gr.teithe.it.it_app.data.model;
 
 import androidx.annotation.NonNull;
 
-import gr.teithe.it.it_app.data.local.preference.PreferencesManager;
+import com.google.gson.annotations.SerializedName;
 
-import java.io.IOException;
+import java.io.Serializable;
 
-import okhttp3.Interceptor;
-import okhttp3.Response;
-
-public class TokenInterceptor implements Interceptor
+public class File implements Serializable
 {
     @NonNull
-    @Override
-    public Response intercept(@NonNull Chain chain) throws IOException
+    @SerializedName("_id")
+    private String id;
+    @NonNull
+    private String name;
+    @NonNull
+    private String contentType;
+
+    public File(@NonNull String id, @NonNull String name, @NonNull String contentType)
     {
-        if(chain.request().url().toString().contains("login") || chain.request().url().toString().contains("public"))
-        {
-            return chain.proceed(chain.request());
-        }
-        else
-        {
-            return chain.proceed(chain.request().newBuilder()
-                    .header("x-access-token", PreferencesManager.getAccessToken())
-                    .build());
-        }
+        this.id = id;
+        this.name = name;
+        this.contentType = contentType;
+    }
+
+    @NonNull
+    public String getId()
+    {
+        return id;
+    }
+
+    @NonNull
+    public String getName()
+    {
+        return name;
+    }
+
+    @NonNull
+    public String getContentType()
+    {
+        return contentType;
     }
 }

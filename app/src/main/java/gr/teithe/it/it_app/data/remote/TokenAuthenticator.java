@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,14 +49,8 @@ public class TokenAuthenticator implements Authenticator
                         .header("x-access-token", token.getAccessToken())
                         .build();
             }
-            else
-            {
-                return null;
-            }
         }
-        else
-        {
-            return null;
-        }
+
+        return null;
     }
 }

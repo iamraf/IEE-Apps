@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,38 +17,21 @@
 
 package gr.teithe.it.it_app.ui.details;
 
-import android.app.DownloadManager;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import gr.teithe.it.it_app.data.model.Announcement;
+import gr.teithe.it.it_app.data.model.File;
 import gr.teithe.it.it_app.data.repository.AnnouncementsRepository;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import okio.BufferedSink;
-import okio.Okio;
-import retrofit2.Response;
-
-import static android.content.Context.DOWNLOAD_SERVICE;
 
 public class DetailsViewModel extends ViewModel
 {
@@ -59,8 +42,7 @@ public class DetailsViewModel extends ViewModel
     private MutableLiveData<String> errorMessage;
     private MutableLiveData<Boolean> isLoading;
 
-    private MutableLiveData<Boolean> isSuccess;
-    private MutableLiveData<Boolean> isDownloading;
+    private MutableLiveData<File> file;
 
     public DetailsViewModel()
     {
@@ -71,8 +53,7 @@ public class DetailsViewModel extends ViewModel
         errorMessage = new MutableLiveData<>();
         isLoading = new MutableLiveData<>();
 
-        isSuccess = new MutableLiveData<>();
-        isDownloading = new MutableLiveData<>();
+        file = new MutableLiveData<>();
     }
 
     public void loadAnnouncement(String id)
@@ -86,6 +67,11 @@ public class DetailsViewModel extends ViewModel
                 {
                     announcement.setValue(announce);
                     isLoading.setValue(false);
+
+                    if(announce.getAttachments() != null)
+                    {
+                        loadFiles(announce.getAttachments());
+                    }
                 }, throwable ->
                 {
                     if(throwable instanceof UnknownHostException)
@@ -105,134 +91,15 @@ public class DetailsViewModel extends ViewModel
                 }));
     }
 
-    public void downloadFiles(String id, Context context)
+    private void loadFiles(ArrayList<String> attachments)
     {
-        isDownloading.postValue(true);
-        disposable.add(announcementsRepository.downloadFiles(id)
-                .flatMap(response -> saveFile(response, id, context))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(flag ->
-                {
-                    if(flag)
-                    {
-                        isSuccess.postValue(true);
-                    }
-                    else
-                    {
-                        isSuccess.postValue(false);
-                    }
-
-                    isDownloading.postValue(false);
-
-                }, throwable ->
-                {
-                    isDownloading.postValue(false);
-                    isSuccess.postValue(false);
-                }));
-    }
-
-    private Observable<Boolean> saveFile(Response<ResponseBody> response, String id, Context context)
-    {
-        return Observable.create(emitter ->
+        for(String fileId : attachments)
         {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-            {
-                final String relativeLocation = Environment.DIRECTORY_DOWNLOADS + File.separator + "IEE-Apps";
-
-                final ContentValues contentValues = new ContentValues();
-                contentValues.put(MediaStore.Files.FileColumns.RELATIVE_PATH, relativeLocation);
-                contentValues.put(MediaStore.Files.FileColumns.DISPLAY_NAME, "f" + id);
-                contentValues.put(MediaStore.Files.FileColumns.TITLE, "f" + id);
-                contentValues.put(MediaStore.Files.FileColumns.MIME_TYPE, "application/zip");
-
-                final ContentResolver resolver = context.getContentResolver();
-
-                OutputStream stream;
-                Uri uri = null;
-
-                try
-                {
-                    if(response.body() == null)
-                    {
-                        throw new IOException();
-                    }
-
-                    uri = resolver.insert(MediaStore.Files.getContentUri("external"), contentValues);
-
-                    if(uri == null)
-                    {
-                        throw new IOException();
-                    }
-
-                    stream = resolver.openOutputStream(uri);
-
-                    if(stream == null)
-                    {
-                        throw new IOException();
-                    }
-
-                    byte[] fileReader = new byte[8 * 1024];
-
-                    while(true)
-                    {
-                        int read = response.body().byteStream().read(fileReader);
-
-                        if(read == -1)
-                        {
-                            break;
-                        }
-
-                        stream.write(fileReader, 0, read);
-                    }
-
-                    stream.flush();
-                    stream.close();
-
-                    emitter.onNext(true);
-                    emitter.onComplete();
-                }
-                catch(IOException e)
-                {
-                    if(uri != null)
-                    {
-                        resolver.delete(uri, null, null);
-                    }
-
-                    emitter.onError(e);
-                }
-            }
-            else
-            {
-                try
-                {
-                    if(response.body() == null)
-                    {
-                        throw new IOException();
-                    }
-
-                    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "f" + id + ".zip");
-
-                    BufferedSink sink = Okio.buffer(Okio.sink(file));
-                    sink.writeAll(response.body().source());
-                    sink.close();
-
-                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
-
-                    if(downloadManager != null)
-                    {
-                        downloadManager.addCompletedDownload(file.getName(), file.getName(), true, "application/zip", file.getAbsolutePath(), file.length(), true);
-                    }
-
-                    emitter.onNext(true);
-                    emitter.onComplete();
-                }
-                catch(IOException e)
-                {
-                    emitter.onError(e);
-                }
-            }
-        });
+            disposable.add(announcementsRepository.getFile(fileId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(filer -> file.postValue(filer)));
+        }
     }
 
     public LiveData<Announcement> getAnnouncement()
@@ -250,14 +117,9 @@ public class DetailsViewModel extends ViewModel
         return isLoading;
     }
 
-    public LiveData<Boolean> isSuccess()
+    public LiveData<File> getFile()
     {
-        return isSuccess;
-    }
-
-    public LiveData<Boolean> isDownloading()
-    {
-        return isDownloading;
+        return file;
     }
 
     @Override

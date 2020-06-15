@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -103,7 +104,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                            android:orientation="vertical"
                             android:layout_below="@+id/f_details_text"
                             android:layout_marginTop="8dp"
                             android:visibility="@{announcement.attachments.size() == 0 ? View.GONE : View.VISIBLE}">
@@ -116,6 +117,12 @@
                                 android:textStyle="italic"
                                 android:textColor="?android:attr/textColorSecondary"/>
 
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/f_details_recycler"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"/>
+
                             <TextView
                                 android:id="@+id/f_details_files"
                                 android:layout_width="wrap_content"
@@ -124,7 +131,8 @@
                                 android:fontFamily="sans-serif-light"
                                 android:text="@{`Λήψη (` + announcement.attachments.size() + `)`}"
                                 android:textColor="?android:attr/textColorPrimary"
-                                android:textStyle="italic" />
+                                android:textStyle="italic"
+                                android:visibility="gone"/>
                         </LinearLayout>
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>

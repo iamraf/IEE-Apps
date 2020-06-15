@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity
 
     private void setupNavigation()
     {
-        NavController navController = Navigation.findNavController(this, R.id.a_main_host);
-        navController.addOnDestinationChangedListener((controller, destination, arguments) ->
+        NavController mNavController = Navigation.findNavController(this, R.id.a_main_host);
+        mNavController.addOnDestinationChangedListener((controller, destination, arguments) ->
         {
             switch(destination.getId())
             {
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        NavigationUI.setupWithNavController(mDataBinding.aMainToolbar, navController, new AppBarConfiguration.Builder(R.id.announcementsFragment, R.id.profileFragment, R.id.settingsFragment).build());
-        NavigationUI.setupWithNavController(mDataBinding.aMainBottom, navController);
+        NavigationUI.setupWithNavController(mDataBinding.aMainToolbar, mNavController, new AppBarConfiguration.Builder(R.id.announcementsFragment, R.id.profileFragment, R.id.settingsFragment).build());
+        NavigationUI.setupWithNavController(mDataBinding.aMainBottom, mNavController);
     }
 }

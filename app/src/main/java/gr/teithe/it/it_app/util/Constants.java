@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Raf
+ * Copyright (C) 2018-2020 Raf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,9 @@ public class Constants
     public static final String LOGIN_URL = "https://login.iee.ihu.gr/";
     public static final String TOKEN_URL = "https://login.iee.ihu.gr/token";
     public static final String AUTHORIZATION_URL = "https://login.iee.ihu.gr/authorization/?client_id=" + CLIENT_ID + "&redirect_uri=" + RESPONSE_URL + "&response_type=code&scope=announcements,profile,notifications,refresh_token,edit_mail,edit_password,edit_profile,edit_notifications";
-    public static final String COPY_URL = "https://apps.iee.ihu.gr/announcements/announcement/";
+
+    //TODO: Update url when apps.iee.ihu.gr starts working
+    public static final String COPY_URL = "https://apps.it.teithe.gr/announcements/announcement/";
 
     public static final String GRAND_TYPE_AUTHORIZATION = "authorization_code";
     public static final String GRAND_TYPE_REFRESH_TOKEN = "refresh_token";
