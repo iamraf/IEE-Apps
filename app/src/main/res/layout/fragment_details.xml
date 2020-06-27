@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="announcement"
+            type="gr.teithe.it.it_app.data.model.Announcement" />
+    </data>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -113,41 +121,27 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-light"
-                                android:text="Επισύναψη:"
-                                android:textStyle="italic"
+                                android:text="@{announcement.attachments.size() == 1 ? @string/attachment : @string/attachments}"
                                 android:textColor="?android:attr/textColorSecondary"/>
+
+                            <TextView
+                                android:id="@+id/f_details_files"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:text="Παρακαλώ περιμένετε..."
+                                android:textColor="?android:attr/textColorSecondary"
+                                android:textStyle="italic" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/f_details_recycler"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"/>
-
-                            <TextView
-                                android:id="@+id/f_details_files"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="2dp"
-                                android:fontFamily="sans-serif-light"
-                                android:text="@{`Λήψη (` + announcement.attachments.size() + `)`}"
-                                android:textColor="?android:attr/textColorPrimary"
-                                android:textStyle="italic"
-                                android:visibility="gone"/>
                         </LinearLayout>
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </ScrollView>
-
     </FrameLayout>
-
-    <data>
-
-        <import type="android.view.View"/>
-
-        <variable
-            name="announcement"
-            type="gr.teithe.it.it_app.data.model.Announcement" />
-    </data>
 </layout>
-

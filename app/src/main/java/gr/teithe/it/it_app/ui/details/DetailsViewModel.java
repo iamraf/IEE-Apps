@@ -98,7 +98,7 @@ public class DetailsViewModel extends ViewModel
             disposable.add(announcementsRepository.getFile(fileId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(filer -> file.postValue(filer)));
+                    .subscribe(filer -> file.postValue(filer), throwable -> {}));
         }
     }
 

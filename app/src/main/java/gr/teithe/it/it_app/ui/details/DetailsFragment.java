@@ -125,7 +125,12 @@ public class DetailsFragment extends Fragment implements FilesAdapter.FilesAdapt
             }
         });
 
-        mViewModel.getFile().observe(getViewLifecycleOwner(), file -> mAdapter.addFile(file));
+        mViewModel.getFile().observe(getViewLifecycleOwner(), file ->
+        {
+            mDataBinding.fDetailsFiles.setVisibility(View.GONE);
+
+            mAdapter.addFile(file);
+        });
     }
 
     @Override
@@ -165,6 +170,6 @@ public class DetailsFragment extends Fragment implements FilesAdapter.FilesAdapt
     @Override
     public void onClicked(File file)
     {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.API_URL + "files/" + file.getId() + "/view?access_token=" + PreferencesManager.getAccessToken())));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.API_URL + "files/download/" + file.getId() + "?access_token=" + PreferencesManager.getAccessToken())));
     }
 }

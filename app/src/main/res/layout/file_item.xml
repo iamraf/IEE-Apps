@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="@{file.name}"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textStyle="italic" />
+            android:textColor="?android:attr/textColorPrimary"/>
     </LinearLayout>
 </layout>
