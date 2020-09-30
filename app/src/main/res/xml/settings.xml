@@ -39,6 +39,11 @@
             android:title="Ειδοποιήσεις" />
 
         <Preference
+            android:icon="@drawable/ic_baseline_star_24"
+            android:key="pref_star"
+            android:title="Αξιολόγηση εφαρμογής" />
+
+        <Preference
             android:icon="@drawable/ic_bug_report_black_24dp"
             android:key="pref_bug"
             android:title="Αναφορά προβλήματος" />
@@ -46,13 +51,17 @@
 
     <PreferenceCategory android:title="Πληροφορίες">
         <Preference
-            android:icon="@drawable/ic_document_black_24dp"
-            android:key="pref_privacy"
-            android:title="Πολιτική Απορρήτου" />
+            android:icon="@drawable/ic_info_outline_black_24dp"
+            android:key="pref_info"
+            android:title="Πληροφορίες εφαρμογής" />
 
         <Preference
-            android:icon="@drawable/ic_info_outline_black_24dp"
-            android:key="pref_about"
-            android:title="Έκδοση" />
+            android:icon="@drawable/ic_document_black_24dp"
+            android:key="pref_privacy"
+            android:title="Πολιτική απορρήτου" />
+
+        <Preference
+            android:key="pref_version"
+            android:layout="@layout/version_layout"/>
     </PreferenceCategory>
 </PreferenceScreen>

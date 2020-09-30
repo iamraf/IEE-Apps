@@ -52,7 +52,6 @@ import gr.teithe.it.it_app.util.Constants;
 public class DetailsFragment extends Fragment implements FilesAdapter.FilesAdapterListener
 {
     private FragmentDetailsBinding mDataBinding;
-    private DetailsViewModel mViewModel;
 
     private String mAnnouncementId;
     private String mAnnouncementCategory;
@@ -90,7 +89,7 @@ public class DetailsFragment extends Fragment implements FilesAdapter.FilesAdapt
     {
         super.onActivityCreated(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
+        DetailsViewModel mViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
 
         mViewModel.loadAnnouncement(mAnnouncementId);
 

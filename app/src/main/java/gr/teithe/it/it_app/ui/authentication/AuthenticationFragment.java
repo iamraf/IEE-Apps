@@ -75,6 +75,7 @@ public class AuthenticationFragment extends Fragment
             else
             {
                 Toast.makeText(getContext(), "Η σύνδεση απέτυχε", Toast.LENGTH_SHORT).show();
+
                 Navigation.findNavController(mDataBinding.getRoot()).popBackStack();
             }
         });
@@ -88,6 +89,7 @@ public class AuthenticationFragment extends Fragment
                 if(url.contains(Constants.LOGIN_URL))
                 {
                     mDataBinding.fAuthenticationWeb.loadUrl(url);
+
                     return true;
                 }
                 else
@@ -112,6 +114,7 @@ public class AuthenticationFragment extends Fragment
                     else
                     {
                         mDataBinding.fAuthenticationWeb.loadUrl(Constants.AUTHORIZATION_URL);
+
                         return true;
                     }
                 }

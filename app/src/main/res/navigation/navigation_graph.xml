@@ -40,8 +40,7 @@
         <deepLink
             android:id="@+id/deepLink"
             app:uri="https://apps.it.teithe.gr/announcements/announcement/{id}"
-            android:autoVerify="true"
-            tools:targetApi="m" />
+            android:autoVerify="true" />
     </fragment>
     <fragment
         android:id="@+id/authenticationFragment"

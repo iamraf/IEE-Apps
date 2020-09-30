@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="user"
+            type="gr.teithe.it.it_app.data.model.User" />
+    </data>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -360,13 +366,5 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </ScrollView>
-
     </FrameLayout>
-
-    <data>
-
-        <variable
-            name="user"
-            type="gr.teithe.it.it_app.data.model.User" />
-    </data>
 </layout>

@@ -26,7 +26,7 @@ import gr.teithe.it.it_app.data.model.User;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -59,10 +59,10 @@ public interface ApiService
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @POST
     Observable<TokenResponse> authenticate(@Url String url,
-                                         @Field("client_id") String clientId,
-                                         @Field("client_secret") String clientSecret,
-                                         @Field("grant_type") String grantType,
-                                         @Field("code") String code);
+                                           @Field("client_id") String clientId,
+                                           @Field("client_secret") String clientSecret,
+                                           @Field("grant_type") String grantType,
+                                           @Field("code") String code);
 
     @GET("{path}?sort=-date")
     Call<List<Announcement>> getPagingAnnouncements(@Path(value = "path", encoded = true) String path,

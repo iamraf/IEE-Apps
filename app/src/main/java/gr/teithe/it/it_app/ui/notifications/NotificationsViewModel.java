@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class NotificationsViewModel extends ViewModel
 {
@@ -121,7 +121,13 @@ public class NotificationsViewModel extends ViewModel
         disposable.add(notificationsRepository.postNotifications()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
+                .subscribe(response ->
+                {
+                    //Do nothing
+                }, throwable ->
+                {
+                    //Do nothing
+                }));
     }
 
     public LiveData<List<Notification>> getNotifications()

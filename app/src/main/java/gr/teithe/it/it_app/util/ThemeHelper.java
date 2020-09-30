@@ -17,9 +17,10 @@
 
 package gr.teithe.it.it_app.util;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.BuildCompat;
 
 public class ThemeHelper
 {
@@ -34,7 +35,7 @@ public class ThemeHelper
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 break;
             default:
-                if(BuildCompat.isAtLeastQ())
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
                 {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 }

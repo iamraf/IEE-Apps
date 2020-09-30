@@ -51,6 +51,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
     @Override
     public void onCreatePreferences(Bundle bundle, String s)
     {
+        //TODO: Method too long, maybe break down
+
         setPreferencesFromResource(R.xml.settings, s);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -173,12 +175,47 @@ public class SettingsFragment extends PreferenceFragmentCompat
             });
         }
 
+        Preference star = findPreference("pref_star");
+        if(star != null)
+        {
+            star.setOnPreferenceClickListener(preference ->
+            {
+                Activity activity = getActivity();
+
+                if(activity != null)
+                {
+                    new AlertDialog.Builder(activity)
+                            .setTitle("Αξιολόγηση")
+                            .setMessage("Η αξιολόγηση σας είναι σημαντική για την βελτίωση της εφαρμογής." +
+                                    "\n\nΠροσοχή: Σε περίπτωση που δεν μπορείτε να δείτε την επιλογή αξιολόγησης, θα χρειαστεί να πατήσετε το κουμπί \"Join the beta\" και μετά \"Leave\". " +
+                                    "Η επιλογή θα είναι διαθέσιμη όταν ολοκληρωθεί η διαδικασία. ")
+                            .setPositiveButton("Αξιολογηστε τωρα", (dialog, which) ->
+                            {
+                                try
+                                {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
+                                }
+                                catch(Exception e)
+                                {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID)));
+                                }
+                            })
+                            .setNegativeButton("Αργοτερα", null)
+                            .show();
+
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
         Preference bug = findPreference("pref_bug");
         if(bug != null)
         {
             bug.setOnPreferenceClickListener(preference ->
             {
-                String data = "mailto:rafaellos.g9@gmail.com" +
+                String data = "mailto:" + Constants.CONTACT_EMAIL +
                         "?subject=" + Uri.encode("IEE Apps " + BuildConfig.VERSION_NAME + " - Αναφορά προβλήματος (" + Build.MODEL + ", " + Build.VERSION.SDK_INT + ")") +
                         "&body=" + Uri.encode("Αναφέρετε το πρόβλημα σας εδώ:\n");
 
@@ -214,10 +251,33 @@ public class SettingsFragment extends PreferenceFragmentCompat
             });
         }
 
-        Preference about = findPreference("pref_about");
-        if(about != null)
+        Preference info = findPreference("pref_info");
+        if(info != null)
         {
-            about.setSummary(BuildConfig.VERSION_NAME);
+            info.setOnPreferenceClickListener(preference ->
+            {
+                Activity activity = getActivity();
+
+                if(activity != null)
+                {
+                    new AlertDialog.Builder(activity)
+                            .setTitle("Πληροφορίες")
+                            .setMessage("Η εφαρμογή δημιουργήθηκε για την διευκόλυνση των φοιτητών ώστε να έχουν πιο εύκολη και πιο γρήγορη πρόσβαση στις ανακοινώσεις του τμήματος όπως επίσης για να ενημερώνονται μέσω push notifications στις κατηγορίες που τους ενδιαφέρουν." +
+                                    "\n\nΕίναι μέρος της Πτυχιακής Εργασίας με τίτλο \"Ανάπτυξη Android εφαρμογής για τις υπηρεσίες του Τμήματος Μηχανικών Πληροφορικής και Ηλεκτρονικών Συστημάτων\" και ο κώδικας είναι open-source στην διεύθυνση \nhttps://github.com/iamraf/IEE-Apps.")
+                            .setNegativeButton("Κλεισιμο", null)
+                            .show();
+
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        Preference version = findPreference("pref_version");
+        if(version != null)
+        {
+            version.setSummary("Έκδοση " + BuildConfig.VERSION_NAME);
         }
     }
 

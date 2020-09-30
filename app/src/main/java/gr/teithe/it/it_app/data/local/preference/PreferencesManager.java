@@ -74,4 +74,16 @@ public class PreferencesManager
         prefsEditor.putBoolean("pref_notifications", flag);
         prefsEditor.apply();
     }
+
+    public static long getNextRateTimestamp()
+    {
+        return instance.getLong("pref_rate", 0);
+    }
+
+    public static void setNextRateTimestamp(long timestamp)
+    {
+        SharedPreferences.Editor prefsEditor = instance.edit();
+        prefsEditor.putLong("pref_rate", timestamp);
+        prefsEditor.apply();
+    }
 }

@@ -29,9 +29,9 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DetailsViewModel extends ViewModel
 {
@@ -98,7 +98,13 @@ public class DetailsViewModel extends ViewModel
             disposable.add(announcementsRepository.getFile(fileId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(filer -> file.postValue(filer), throwable -> {}));
+                    .subscribe(filer ->
+                    {
+                        file.postValue(filer);
+                    }, throwable ->
+                    {
+                        //Do nothing
+                    }));
         }
     }
 

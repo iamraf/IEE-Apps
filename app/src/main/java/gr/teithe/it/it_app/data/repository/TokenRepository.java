@@ -23,7 +23,7 @@ import gr.teithe.it.it_app.data.remote.ApiClient;
 import gr.teithe.it.it_app.data.remote.ApiService;
 import gr.teithe.it.it_app.util.Constants;
 
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 
 public class TokenRepository

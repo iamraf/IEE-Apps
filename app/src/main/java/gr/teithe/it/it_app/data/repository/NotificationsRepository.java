@@ -21,7 +21,7 @@ import gr.teithe.it.it_app.data.model.NotificationsResponse;
 import gr.teithe.it.it_app.data.remote.ApiClient;
 import gr.teithe.it.it_app.data.remote.ApiService;
 
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 

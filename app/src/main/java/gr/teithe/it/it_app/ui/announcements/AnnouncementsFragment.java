@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -47,6 +48,7 @@ import gr.teithe.it.it_app.databinding.FragmentAnnouncementsBinding;
 
 import gr.teithe.it.it_app.ui.main.MainActivity;
 import gr.teithe.it.it_app.util.BadgeDrawable;
+
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -77,9 +79,16 @@ public class AnnouncementsFragment extends Fragment implements AnnouncementsAdap
         mDataBinding.fAnnouncementsSwipe.setOnRefreshListener(() -> mViewModel.refreshData());
 
         mSnackBar = Snackbar.make(mDataBinding.fAnnouncementsCoordinator, "Συνδεθείτε για την πλήρη λειτουργία της εφαρμογής", Snackbar.LENGTH_SHORT);
-        mSnackBar.setAction("Συνδεση", view -> Navigation.findNavController(mDataBinding.getRoot()).navigate(AnnouncementsFragmentDirections.announcementsToAuthentication()));
-        mSnackBar.setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE);
+        mSnackBar.setAction("Συνδεση", view ->
+        {
+            NavController navController = Navigation.findNavController(mDataBinding.getRoot());
 
+            if(navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() == R.id.announcementsFragment)
+            {
+                navController.navigate(AnnouncementsFragmentDirections.announcementsToAuthentication());
+            }
+        });
+        mSnackBar.setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE);
 
         return mDataBinding.getRoot();
     }
@@ -87,6 +96,8 @@ public class AnnouncementsFragment extends Fragment implements AnnouncementsAdap
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
+        //TODO: Method too long, maybe break down
+
         super.onActivityCreated(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(AnnouncementsViewModel.class);
@@ -213,12 +224,24 @@ public class AnnouncementsFragment extends Fragment implements AnnouncementsAdap
     {
         if(item.getItemId() == R.id.m_announcements_search)
         {
-            Navigation.findNavController(mDataBinding.getRoot()).navigate(AnnouncementsFragmentDirections.announcementsToSearch());
+            NavController navController = Navigation.findNavController(mDataBinding.getRoot());
+
+            if(navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() == R.id.announcementsFragment)
+            {
+                navController.navigate(AnnouncementsFragmentDirections.announcementsToSearch());
+            }
+
             return true;
         }
         else if(item.getItemId() == R.id.m_announcements_notifications)
         {
-            Navigation.findNavController(mDataBinding.getRoot()).navigate(AnnouncementsFragmentDirections.announcementsToNotifications());
+            NavController navController = Navigation.findNavController(mDataBinding.getRoot());
+
+            if(navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() == R.id.announcementsFragment)
+            {
+                navController.navigate(AnnouncementsFragmentDirections.announcementsToNotifications());
+            }
+
             return true;
         }
 
@@ -234,7 +257,12 @@ public class AnnouncementsFragment extends Fragment implements AnnouncementsAdap
 
         mViewModel.sendNotification(announcement);
 
-        Navigation.findNavController(mDataBinding.getRoot()).navigate(action);
+        NavController navController = Navigation.findNavController(mDataBinding.getRoot());
+
+        if(navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() == R.id.announcementsFragment)
+        {
+            navController.navigate(action);
+        }
     }
 
     private void setBadgeCount(Context context, LayerDrawable icon, String count)

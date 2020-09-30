@@ -1,0 +1,14 @@
+{
+    "rules":
+    {
+        ".read": false,
+        "Notifications":
+        {
+            "$uid":
+            {
+                ".validate": "newData.hasChildren(['about', 'category', 'title', 'name', 'date']) && newData.child('date').val() > '2020-09-30T00:00:00.000Z'",
+                ".write": "!data.exists()"
+            }
+        }
+    }
+}

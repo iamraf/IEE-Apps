@@ -32,6 +32,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.Task;
+
+import java.util.Calendar;
+import java.util.Locale;
+
 import gr.teithe.it.it_app.R;
 import gr.teithe.it.it_app.data.local.preference.PreferencesManager;
 import gr.teithe.it.it_app.databinding.ActivityMainBinding;
@@ -48,14 +56,14 @@ public class MainActivity extends AppCompatActivity
 
         PreferencesManager.init(this);
 
-        applyTheme();
-
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         mDataBinding.aMainToolbar.setTitle("Ανακοινώσεις");
         setSupportActionBar(mDataBinding.aMainToolbar);
 
+        applyTheme();
         setupNavigation();
+        displayInAppRate();
     }
 
     private void applyTheme()
@@ -106,5 +114,28 @@ public class MainActivity extends AppCompatActivity
 
         NavigationUI.setupWithNavController(mDataBinding.aMainToolbar, mNavController, new AppBarConfiguration.Builder(R.id.announcementsFragment, R.id.profileFragment, R.id.settingsFragment).build());
         NavigationUI.setupWithNavController(mDataBinding.aMainBottom, mNavController);
+    }
+
+    private void displayInAppRate()
+    {
+        long current = Calendar.getInstance(Locale.getDefault()).getTimeInMillis() / 1000;
+        long next = PreferencesManager.getNextRateTimestamp();
+
+        if(current >= next + 604800) //Display in-app rate every 7 days
+        {
+            ReviewManager manager = ReviewManagerFactory.create(this);
+            Task<ReviewInfo> request = manager.requestReviewFlow();
+            request.addOnCompleteListener(reviewTask ->
+            {
+                if(reviewTask.isSuccessful())
+                {
+                    ReviewInfo reviewInfo = reviewTask.getResult();
+
+                    manager.launchReviewFlow(this, reviewInfo);
+                }
+
+                PreferencesManager.setNextRateTimestamp(current);
+            });
+        }
     }
 }

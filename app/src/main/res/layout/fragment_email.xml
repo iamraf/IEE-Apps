@@ -20,7 +20,6 @@
                 android:fontFamily="sans-serif-light"
                 android:hint="Νέο email"
                 android:textSize="14sp" />
-
         </com.google.android.material.textfield.TextInputLayout>
     </FrameLayout>
 </layout>

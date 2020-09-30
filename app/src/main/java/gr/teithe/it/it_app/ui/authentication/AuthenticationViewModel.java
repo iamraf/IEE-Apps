@@ -21,12 +21,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import gr.teithe.it.it_app.data.repository.TokenRepository;
 import gr.teithe.it.it_app.data.local.preference.PreferencesManager;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AuthenticationViewModel extends ViewModel
 {
@@ -54,6 +57,8 @@ public class AuthenticationViewModel extends ViewModel
                     {
                         PreferencesManager.setRefreshToken(tokenResponse.getRefreshToken());
                         PreferencesManager.setAccessToken(tokenResponse.getAccessToken());
+
+                        PreferencesManager.setNextRateTimestamp(Calendar.getInstance(Locale.getDefault()).getTimeInMillis() / 1000);
 
                         authenticated.setValue(true);
                     }

@@ -26,9 +26,9 @@ import gr.teithe.it.it_app.data.model.Category;
 import gr.teithe.it.it_app.data.repository.CategoriesRepository;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SettingsViewModel extends ViewModel
 {

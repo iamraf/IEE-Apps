@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -97,6 +98,11 @@ public class NotificationsFragment extends Fragment implements NotificationsAdap
         action.setTitle(notification.getNotification().getRelated().getId().getAbout().getName());
         action.setId(notification.getNotification().getRelated().getId().getId());
 
-        Navigation.findNavController(mDataBinding.getRoot()).navigate(action);
+        NavController navController = Navigation.findNavController(mDataBinding.getRoot());
+
+        if(navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() == R.id.notificationsFragment)
+        {
+            navController.navigate(action);
+        }
     }
 }

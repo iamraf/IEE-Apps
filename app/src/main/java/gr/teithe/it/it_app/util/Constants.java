@@ -22,8 +22,10 @@ public class Constants
     public static final String CLIENT_ID = "YOUR_ID";
     public static final String CLIENT_SECRET = "YOUR_SECRET";
 
-    public static final String RESPONSE_URL = "https://github.com/h01d/IEE-Apps";
-    public static final String POLICY_URL = "https://github.com/h01d/IEE-Apps/blob/master/PRIVACY-POLICY.md";
+    public static final String CONTACT_EMAIL = "YOUR_EMAIL";
+
+    public static final String RESPONSE_URL = "https://github.com/iamraf/IEE-Apps";
+    public static final String POLICY_URL = "https://github.com/iamraf/IEE-Apps/blob/master/PRIVACY-POLICY.md";
 
     public static final String API_URL = "https://api.iee.ihu.gr/";
     public static final String LOGIN_URL = "https://login.iee.ihu.gr/";
