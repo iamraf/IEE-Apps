@@ -1,7 +1,5 @@
 # IEE Apps
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a73abe04a7ca465596a0d6148ad68eda)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iamraf/IEE-Apps&amp;utm_campaign=Badge_Grade)
-
 Android application with services of the [Information and Electronic Engineering](https://www.iee.ihu.gr) department of [International Hellenic University](https://www.ihu.gr).
 
 This is a part of my University thesis "Development of an Android application for the services of Information and Electronic Engineering department"
